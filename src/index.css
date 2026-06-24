@@ -1,0 +1,148 @@
+:root {
+  /* Color Palette - Highly Readable & Modern */
+  --bg-app: #f4f5f7;        /* Soft gray app background */
+  --bg-surface: #ffffff;    /* Pure white for panels */
+  --bg-surface-hover: #f8f9fa; 
+  --bg-header: #ffffff;
+  
+  --text-main: #1e293b;     /* Very dark blue/gray for high contrast readability */
+  --text-muted: #64748b;    /* Muted text for secondary info */
+  --text-inverse: #ffffff;
+
+  --accent-primary: #3b82f6; /* Modern Blue */
+  --accent-primary-hover: #2563eb;
+  --accent-secondary: #eff6ff; /* Soft blue for highlights */
+  
+  --border-color: #e2e8f0;
+  
+  /* Status Colors */
+  --color-danger: #ef4444;
+  --color-danger-bg: #fef2f2;
+  --color-warning: #f59e0b;
+  --color-success: #10b981;
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  
+  /* Transitions */
+  --transition-fast: 150ms ease-in-out;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  color: var(--text-main);
+  background-color: var(--bg-app);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  font-family: var(--font-sans);
+  outline: none;
+  border: none;
+}
+
+input {
+  font-family: var(--font-sans);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Layout Utilities */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-header {
+  height: 64px;
+  background-color: var(--bg-header);
+  border-bottom: 1px solid var(--border-color);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 0 24px;
+  box-shadow: var(--shadow-sm);
+  z-index: 10;
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Scrollable areas */
+.scrollable {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .app-container {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+  
+  .app-header {
+    grid-template-columns: 1fr;
+    height: auto;
+    padding: 16px;
+    gap: 16px;
+    justify-items: center;
+    text-align: center;
+  }
+  
+  .app-header > div:last-child {
+    display: none;
+  }
+  
+  .main-content {
+    flex-direction: column;
+    overflow: visible;
+  }
+  
+  .scrollable {
+    overflow-y: visible;
+  }
+}
