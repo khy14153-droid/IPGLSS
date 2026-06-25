@@ -70,6 +70,17 @@ export default function App() {
   return "기타";
   };
 
+    const sortedEquipmentKeys = Object.keys(equipmentStructure).sort((a, b) => {
+    if (!selectedAlarm) return 0;
+    
+    const isASelected = selectedAlarm.equipments.includes(a);
+    const isBSelected = selectedAlarm.equipments.includes(b);
+    
+    if (isASelected && !isBSelected) return -1; // 선택된 장비를 위로 보냄
+    if (!isASelected && isBSelected) return 1;
+    return 0;
+  });
+  
   useEffect(() => {
     fetch("/alarm.csv")
       .then((res) => {
@@ -219,7 +230,7 @@ export default function App() {
       setSelectedEquipment(targetEquipment);
     }
 
-    setTimeout(() => {
+    /*setTimeout(() => {
       if (window.innerWidth <= 768 && detailPaneRef.current) {
         detailPaneRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
       } else if (alarm.equipments?.length > 0) {
@@ -235,7 +246,7 @@ export default function App() {
           });
         }
       }
-    }, 50);
+    }, 50);*/
   };
 
   const handleSearch = () => {
@@ -280,12 +291,13 @@ export default function App() {
         <div className="sidebar scrollable">
           {error && <p style={{ color: "var(--color-danger)", fontSize: "14px" }}>{error}</p>}
           
-          <div className="equipment-list">
-            {Object.keys(equipmentStructure).map((eq) => {
-              const isEquipmentSelected =
-                selectedEquipment === eq ||
-                (selectedAlarm && selectedAlarm.equipments?.includes(eq));
-
+         <div className="equipment-list">
+        {sortedEquipmentKeys.map((eq) => {  // 이렇게 바꾸시면 됩니다
+          const isEquipmentSelected =
+            selectedEquipment === eq ||
+            (selectedAlarm && selectedAlarm.equipments?.includes(eq));
+          
+    // ... 나머지 코드는 그대로 두시면 됩니다.
               return (
                 <div
                   key={eq}
