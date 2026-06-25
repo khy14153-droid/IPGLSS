@@ -34,20 +34,23 @@
 
 /* 3-Column Layout */
 .sidebar {
-  width: 680px;
-  flex-shrink: 0;
+  width: 680px;         /* 사이드바 폭 고정 */
+  flex-shrink: 0;       /* 화면이 좁아져도 찌그러지지 않게 함 */
   background-color: var(--bg-surface);
   border-right: 1px solid var(--border-color);
   padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  overflow-y: auto;     /* 세로 스크롤만 허용 */
+  overflow-x: hidden;   /* 가로 스크롤은 강제로 제거 */
 }
 
 .equipment-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
+  overflow-x: hidden;   /* 내부 가로 스크롤 차단 */
 }
 
 .equipment-card {

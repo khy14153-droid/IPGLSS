@@ -244,16 +244,21 @@ export default function App() {
 
   const handleAlarmSelect = (alarm, forceEquipment = null) => {
     setSelectedAlarm(alarm);
+    console.log("알람 부품들:", alarm.components);
 
-    if (alarm.equipments && alarm.components) {
     const newExpanded = {};
-    alarm.equipments.forEach(eq => {
-      alarm.components.forEach(comp => {
-        const cat = getCategory(comp);
-        newExpanded[`${eq}-${cat}`] = true; // 강제로 펼침 상태로 설정
+    if (alarm.equipments && alarm.components) {
+      alarm.equipments.forEach(eq => {
+        alarm.components.forEach(comp => {
+          const cat = getCategory(comp);
+          console.log(`부품 ${comp}의 카테고리: ${cat}`); // 👈 이 줄도 추가
+          // cat이 "기타"이거나 비어있지 않은지, 혹은 실제 매칭되는 부품이 있는지 체크
+          if (cat) {
+            newExpanded[`${eq}-${cat}`] = true;
+          }
+        });
       });
-    });
-      setExpandedCategories(newExpanded);
+    setExpandedCategories(newExpanded);
     } 
     let targetEquipment = forceEquipment;
 
