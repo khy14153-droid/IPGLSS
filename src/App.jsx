@@ -302,7 +302,14 @@ export default function App() {
     if (alarm.components && alarm.components.length > 0) {
       setSelectedComponent(alarm.components[0]);
     }
+    
     setSearch("");
+
+    setTimeout(() => {
+      if (window.innerWidth <= 768 && detailPaneRef.current) {
+        detailPaneRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 100); // 데이터 렌더링 시간을 벌기 위해 100ms 타이밍을 줍니다.
   };
 
   return (
