@@ -29,16 +29,22 @@ export default function App() {
   if (name.includes("프레셔 피스")) return "UPPs";
   if (name.includes("샤프트")) return "UPPs";
 
-  if (name.includes("석션 파이프")) return "호스 및 밸브";
-  if (name.includes("에어 시스템")) return "호스 및 밸브";
-  if (name.includes("냉각 호스")) return "호스 및 밸브";
-  if (name.includes("석션 호스")) return "호스 및 밸브";
-  if (name.includes("오버젯 밸브")) return "호스 및 밸브";
-  if (name.includes("공업용수")) return "호스 및 밸브";
-  if (name.includes("에어 차단 밸브")) return "호스 및 밸브";
-  if (name.includes("냉각수 밸브")) return "호스 및 밸브";
-  if (name.includes("스트레이너")) return "호스 및 밸브";
-
+  if (name.includes("석션 파이프")) return "유량, 호스 및 밸브";
+  if (name.includes("에어 시스템")) return "유량, 호스 및 밸브";
+  if (name.includes("냉각 호스")) return "유량, 호스 및 밸브";
+  if (name.includes("석션 호스")) return "유량, 호스 및 밸브";
+  if (name.includes("오버젯 밸브")) return "유량, 호스 및 밸브";
+  if (name.includes("공업용수")) return "유량, 호스 및 밸브";
+  if (name.includes("에어 차단 밸브")) return "유량, 호스 및 밸브";
+  if (name.includes("냉각수 밸브")) return "유량, 호스 및 밸브";
+  if (name.includes("스트레이너")) return "유량, 호스 및 밸브";
+  if (name.includes("냉각수 유량")) return "유량, 호스 및 밸브";
+  if (name.includes("보호 가스")) return "유량, 호스 및 밸브";
+  if (name.includes("압축 공기 유량")) return "유량, 호스 및 밸브";
+  if (name.includes("물 탱크")) return "유량, 호스 및 밸브";
+  if (name.includes("냉매")) return "유량, 호스 및 밸브";
+  if (name.includes("냉각수")) return "유량, 호스 및 밸브";
+  
   if (name.includes("z-drive")) return "구동계";
   if (name.includes("wobble drive")) return "구동계";
   if (name.includes("seam drive")) return "구동계";
@@ -50,21 +56,42 @@ export default function App() {
   if (name.includes("세이프티")) return "세이프티";
   if (name.includes("비상 정지")) return "세이프티";
 
-  if (name.includes("레이저 모듈")) return "레이저 시스템";
-  if (name.includes("컴바이너")) return "레이저 시스템";
-  if (name.includes("스플라이스 박스")) return "레이저 시스템";
-  if (name.includes("파워 서플라이")) return "레이저 시스템";
+  if (name.includes("레이저 모듈")) return "시스템";
+  if (name.includes("컴바이너")) return "시스템";
+  if (name.includes("스플라이스 박스")) return "시스템";
+  if (name.includes("파워 서플라이")) return "시스템";
+  if (name.includes("lss controller")) return "시스템";
+  if (name.includes("공정 모니터링")) return "시스템";
+  if (name.includes("공정 제어")) return "시스템";
 
   if (name.includes("전장부")) return "전장부";
   if (name.includes("mcu")) return "전장부";
 
   if (name.includes("캐비닛 습도")) return "캐비닛";
   if (name.includes("2x tec")) return "캐비닛";
+
+  if (name.includes("석션 모터")) return "시스템";
+  if (name.includes("필터")) return "시스템";
+  if (name.includes("집진통")) return "시스템";
+  if (name.includes("fumator")) return "시스템";
   
+  if (name.includes("펌프")) return "시스템";
+  if (name.includes("히터")) return "시스템";
+  if (name.includes("컴프레서")) return "시스템";
+  if (name.includes("레귤레이터")) return "시스템";
+  if (name.includes("모터 보호 스위치")) return "시스템";
+  if (name.includes("팬 보호 스위치")) return "시스템";
+  if (name.includes("lci chiller")) return "시스템";
+  if (name.includes("팽창 밸브")) return "시스템";
+
+  if (name.includes("cleaning station")) return "시스템";
+  if (name.includes("드릴 비트")) return "시스템";
+  
+  if (name.includes("파라미터")) return "파라미터";
+
   if (name.includes("센서")) return "센서";
 
   if (name.includes("케이블")) return "케이블";
-  if (name.includes("컨트롤러")) return "컨트롤러";
   if (name.includes("전원")) return "전원";
 
   return "기타";
@@ -178,6 +205,14 @@ export default function App() {
       });
   }, []);
 
+  const resetDashboard = () => {
+    setSearch("");
+    setSelectedAlarm(null);
+    setSelectedComponent(null);
+    setSelectedEquipment(null);
+    setExpandedCategories({});
+  };
+
   const toggleCategory = (eq, cat) => {
   const key = `${eq}-${cat}`;
   setExpandedCategories(prev => ({
@@ -262,13 +297,22 @@ export default function App() {
     if (alarm.components && alarm.components.length > 0) {
       setSelectedComponent(alarm.components[0]);
     }
+    setSearch("");
   };
 
   return (
     <div className="app-container">
       {/* Header */}
       <header className="app-header">
-        <h1 style={{ fontSize: "20px", color: "var(--accent-primary)", margin: 0 }}>
+        <h1 
+          onClick={resetDashboard} 
+          style={{ 
+            fontSize: "20px", 
+            color: "var(--accent-primary)", 
+            margin: 0, 
+            cursor: "pointer" // 마우스 커서를 손가락 모양으로 변경
+          }}
+        >
           LSS Event Dashboard
         </h1>
         <div className="search-container">
@@ -308,59 +352,59 @@ export default function App() {
                     🖥️ {eq} {isEquipmentSelected && "🔥"}
                   </div>
                   
-                 <div className="component-grid">
-                   {(() => {
-                    const groups = {};
-
-                    (equipmentStructure[eq] || []).forEach((comp) => {
-                     const cat = getCategory(comp);
-                      if (!groups[cat]) groups[cat] = [];
-                      groups[cat].push(comp);
-                    });
-
-                    return Object.entries(groups).flatMap(([cat, comps]) => {
-                      const key = `${eq}-${cat}`;
-                      const isOpen = expandedCategories[key];
-
-                      return [
-                       // ✅ 카테고리 버튼
-                        <button
-                          key={`${key}-header`}
-                          onClick={() => {
-                            setExpandedCategories({});
-                            toggleCategory(eq, cat);
-                            setSelectedEquipment(eq);
-                          }}
-                          className={`component-item category-item ${isOpen ? "active" : ""}`}
-                          style={{ gridColumn: "1 / -1" }}
-                        >
-                          {isOpen ? "▼ " : "▶ "} {cat}
-                        </button>,
-
-                        // ✅ 펼쳐졌을 때만 컴포넌트 표시
-                        ...(isOpen
-                          ? comps.map((comp) => {
-                            const isHighlighted =
-                            (selectedAlarm &&
-                              selectedAlarm.equipments?.includes(eq) &&
-                              selectedAlarm.components?.includes(comp));
-
-                              return (
-                                <button
-                                  key={comp}
-                                  onClick={() => {
-                                    handleComponentSelect(comp, eq);
-                                    expandCategory(eq, comp);
-                                  }}
-                                  className={`component-item ${isHighlighted ? "active" : ""}`}
-                                >
-                                  • {comp}
-                                </button>
-                              );
-                            })
-                          : [])
-                        ];
+                  <div className="component-grid">
+                    {(() => {
+                      const groups = {};
+                      (equipmentStructure[eq] || []).forEach((comp) => {
+                        const cat = getCategory(comp);
+                        if (!groups[cat]) groups[cat] = [];
+                        groups[cat].push(comp);
                       });
+
+                      // 1. 카테고리를 정렬합니다 (기타를 최하위로)
+                      return Object.entries(groups)
+                        .sort((a, b) => {
+                          if (a[0] === "기타") return 1;
+                          if (b[0] === "기타") return -1;
+                          return a[0].localeCompare(b[0]); // 나머지 카테고리는 가나다순
+                        })
+                        .flatMap(([cat, comps]) => {
+                          const key = `${eq}-${cat}`;
+                          const isOpen = expandedCategories[key];
+
+                          return [
+                            <button
+                              key={`${key}-header`}
+                              onClick={() => {
+                                // 2. setExpandedCategories({})를 제거하여 다른 카테고리가 닫히지 않게 합니다.
+                                toggleCategory(eq, cat);
+                                setSelectedEquipment(eq);
+                              }}
+                              className={`component-item category-item ${isOpen ? "active" : ""}`}
+                              style={{ gridColumn: "1 / -1" }}
+                            >
+                              {isOpen ? "▼ " : "▶ "} {cat}
+                            </button>,
+
+                            ...(isOpen
+                              ? comps.map((comp) => {
+                                  const isHighlighted = (selectedAlarm && selectedAlarm.equipments?.includes(eq) && selectedAlarm.components?.includes(comp));
+                                  return (
+                                    <button
+                                      key={comp}
+                                      onClick={() => {
+                                        handleComponentSelect(comp, eq);
+                                        expandCategory(eq, comp);
+                                      }}
+                                      className={`component-item ${isHighlighted ? "active" : ""}`}
+                                    >
+                                      • {comp}
+                                    </button>
+                                  );
+                                })
+                              : [])
+                          ];
+                        });
                     })()}
                   </div>
                 </div>
